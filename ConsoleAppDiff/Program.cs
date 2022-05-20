@@ -71,7 +71,7 @@
 
         static double simetrical(double x, double h)
         {
-            return (f(x + h) - f(x - h)) / (2 * h);
+            return (f(x + h) + f(x - h)) / (2 * h);
         }
 
         static double Lagrange(List<double> x, List<double> y, double p)
@@ -123,11 +123,11 @@
                 }
             }
             yy = y[0];
-            c = (p - x[0]) / h;
+            c = 1;
             for (int ii = 1; ii < n; ii++)
             {
                 yy += dy[ii] * c;
-                c *= (p - x[ii]) / (h * n);
+                c = c*(p - x[ii]) / (h * (ii+1));
             }
 
             double sum = 0;
