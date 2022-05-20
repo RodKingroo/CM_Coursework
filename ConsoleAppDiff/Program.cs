@@ -11,7 +11,10 @@
             
             List<double> x = new List<double>();
             List<double> fy = new List<double>();
-            
+            List<double> daprF = new List<double>();
+            List<double> dsimF = new List<double>();
+
+
             double dx = Math.PI / 4;
             
             x.Add(0);
@@ -23,12 +26,16 @@
             }
 
             Console.WriteLine("\tДифференцирование функций, используя симметричную формулу");
-
-            List<double> dsimF = new List<double>();
-
             for (int i = 1; x[i] <= Math.PI; i++){
                 dsimF.Add(simetrical(x[i], dx));
                 Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dsimF[i-1],3)}");
+            }
+
+            Console.WriteLine("\tДифференцирование функции, используя приближеную формулу");
+            for (int i = 1; x[i] <= Math.PI; i++)
+            {
+                daprF.Add(approx(x[i], dx));
+                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(daprF[i - 1], 3)}");
             }
 
             while (Console.ReadKey().Key != ConsoleKey.Escape) ;
@@ -36,6 +43,11 @@
 
         /*f(x) = sin(1.8*x)*/
         static double f(double x){ return Math.Sin(1.8 * x); }
+
+        static double approx(double x, double h)
+        {
+            return (f(x + h) - f(x)) / h;
+        }
 
         static double simetrical(double x, double h)
         {
