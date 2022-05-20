@@ -13,6 +13,7 @@
             List<double> fy = new List<double>();
             List<double> daprF = new List<double>();
             List<double> dsimF = new List<double>();
+            List<double> dLgrF = new List<double>();
 
 
             double dx = Math.PI / 4;
@@ -38,6 +39,13 @@
                 Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(daprF[i - 1], 3)}");
             }
 
+            Console.WriteLine("\tДифференцирование функции через построение полинома Лангранжа");
+            for (int i = 1; x[i] <= Math.PI; i++)
+            {
+                dLgrF.Add(Lagrange(x, fy, x[i]));
+                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dLgrF[i - 1], 3)}");
+            }
+
             while (Console.ReadKey().Key != ConsoleKey.Escape) ;
         }
 
@@ -52,6 +60,39 @@
         static double simetrical(double x, double h)
         {
             return (f(x + h) - f(x - h)) / (2 * h);
+        }
+
+        static double Lagrange(List <double> x, List <double> y, double p)
+        {
+            double yy = 0;
+            double n = x.Count - 2;
+            double t1;
+            double t2;
+            List<double> L = new List<double>();
+            
+            for (int i = 0; i < n; i++)
+            {
+                t1 = 1;
+                t2 = 1;
+                for (int j = 0; j < n; j++)
+                {
+                    if (i != j) {
+                        t1 *= (p - x[j]);
+                        t2 *= (x[i] - x[j]);
+                        
+                    }
+                }
+
+                L.Add(y[i] * (t1 / t2));
+            }
+
+            for(int i = 0; i < L.Count; i++)
+            {
+                yy += L[i];
+            }
+
+            return yy;
+
         }
     }
 }
