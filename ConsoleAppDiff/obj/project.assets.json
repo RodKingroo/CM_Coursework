@@ -129,11 +129,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\COMMUNISM\\ConsoleAppDiff\\ConsoleAppDiff\\ConsoleAppDiff.csproj",
+      "projectUniqueName": "D:\\Project\\CM_Coursework\\ConsoleAppDiff\\ConsoleAppDiff.csproj",
       "projectName": "ConsoleAppDiff",
-      "projectPath": "D:\\Project\\COMMUNISM\\ConsoleAppDiff\\ConsoleAppDiff\\ConsoleAppDiff.csproj",
+      "projectPath": "D:\\Project\\CM_Coursework\\ConsoleAppDiff\\ConsoleAppDiff.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\COMMUNISM\\ConsoleAppDiff\\ConsoleAppDiff\\obj\\",
+      "outputPath": "D:\\Project\\CM_Coursework\\ConsoleAppDiff\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

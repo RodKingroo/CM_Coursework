@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3xdxkkYG+iKpVAxr0es9j9nGFbULUUOlvq5DCehuykfpRF7VxLTmGmwMt1jZiCBUzyTavhII8oVoCrI8alt5fw==",
+  "dgSpecHash": "dPnLCF+FtCtMru1nnZOCXW+6tBwknEUWmZEbBdWTk55Jx4G1MQmdSj0L1XnVgukYW6cqs3m2gLtG5Tq5Pl36AQ==",
   "success": true,
-  "projectFilePath": "D:\\Project\\COMMUNISM\\ConsoleAppDiff\\ConsoleAppDiff\\ConsoleAppDiff.csproj",
+  "projectFilePath": "D:\\Project\\CM_Coursework\\ConsoleAppDiff\\ConsoleAppDiff.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
