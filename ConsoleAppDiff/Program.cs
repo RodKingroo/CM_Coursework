@@ -39,7 +39,7 @@
             for (int i = 1; x[i] <= Math.PI; i++)
             {
                 dsimF.Add(simetrical(x[i], dx));
-                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dsimF[i - 1], 3)}");
+                Console.WriteLine($"df(x[{i-1}]) = f({Math.Round(x[i-1], 3)}) = {Math.Round(dsimF[i - 1], 3)}");
             }
 
             Console.WriteLine("\n");
@@ -47,7 +47,7 @@
             for (int i = 1; x[i] <= Math.PI; i++)
             {
                 daprF.Add(approx(x[i], dx));
-                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(daprF[i - 1], 3)}");
+                Console.WriteLine($"df(x[{i - 1}]) = f({Math.Round(x[i - 1], 3)}) = {Math.Round(daprF[i - 1], 3)}");
             }
 
             Console.WriteLine("\n");
