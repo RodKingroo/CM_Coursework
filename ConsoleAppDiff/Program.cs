@@ -15,8 +15,12 @@
             List<double> fy = new List<double>();
             List<double> daprF = new List<double>();
             List<double> dsimF = new List<double>();
+            List<double> LgrF = new List<double>();
             List<double> dLgrF = new List<double>();
+            List<double> ERdLgrF = new List<double>();
+            List<double> NwtF = new List<double>();
             List<double> dNwtF = new List<double>();
+            List<double> ERdNwtF = new List<double>();
 
 
             double dx = Math.PI / 4;
@@ -25,11 +29,12 @@
 
             for (int i = 0; x[i] <= Math.PI; i++)
             {
-                fy.Add(Math.Sin(1.8 * x[i]));
+                fy.Add(f(x[i]));
                 Console.WriteLine($" f(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(fy[i], 3)}");
                 x.Add(x[i] + dx);
             }
 
+            Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функций, используя симметричную формулу");
             for (int i = 1; x[i] <= Math.PI; i++)
             {
@@ -37,6 +42,7 @@
                 Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dsimF[i - 1], 3)}");
             }
 
+            Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции, используя приближеную формулу");
             for (int i = 1; x[i] <= Math.PI; i++)
             {
@@ -44,19 +50,36 @@
                 Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(daprF[i - 1], 3)}");
             }
 
+            Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции через построение полинома Лангранжа");
-            for (int i = 1; x[i] <= Math.PI; i++)
+            for (int i = 0; x[i] <= Math.PI; i++)  { LgrF.Add(Lagrange(x, fy, x[i])); }
+            for (int j = 0; j < LgrF.Count - 1; j++)
             {
-                dLgrF.Add(Lagrange(x, fy, x[i]));
-                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dLgrF[i - 1], 3)}");
+                dLgrF.Add((LgrF[j + 1] - LgrF[j] / dx));
+                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dLgrF[j], 3)}");
             }
 
-            Console.WriteLine("\tДифференцирование функции через построение интерполяции Ньютона");
-            for (int i = 1; x[i] <= Math.PI; i++)
+            Console.WriteLine("\tПогрешность равна:");
+            for(int i = 0;  x[i]<Math.PI; i++)
             {
-                dNwtF.Add(Newton(x, fy, x[i], dx));
-                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dNwtF[i - 1], 3)}");
+                ERdLgrF.Add(daprF[i] - dLgrF[i]);
+                Console.WriteLine($"Rn({Math.Round(x[i], 3)}) = {Math.Round(ERdLgrF[i], 3)}");
             }
+            Console.WriteLine("\n");
+            Console.WriteLine("\tДифференцирование функции через построение интерполяции Ньютона");
+            for (int i = 0; x[i] <= Math.PI; i++) { NwtF.Add(Newton(x, fy, x[i], dx)); }
+            for (int j = 0; j < NwtF.Count - 1; j++) {
+                dNwtF.Add((NwtF[j + 1] - NwtF[j] / dx));
+                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dNwtF[j], 3)}");
+            }
+
+            Console.WriteLine("\tПогрешность равна:");
+            for (int i = 0; x[i] < Math.PI; i++)
+            {
+                ERdNwtF.Add(daprF[i] - dNwtF[i]);
+                Console.WriteLine($"Rn({Math.Round(x[i],3)}) = {Math.Round(ERdNwtF[i], 3)}");
+            }
+
 
             while (Console.ReadKey().Key != ConsoleKey.Escape) ;
         }
