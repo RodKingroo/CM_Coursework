@@ -71,7 +71,7 @@
 
         static double simetrical(double x, double h)
         {
-            return (f(x + h) + f(x - h)) / (2 * h);
+            return (f(x + h) - f(x - h)) / (2 * h);
         }
 
         static double Lagrange(List<double> x, List<double> y, double p)
@@ -112,12 +112,13 @@
 
             List<double> dy = new List<double>();
 
-            for (int i = 0; i < n; i++){
+            for (int i = 0; i < n; i++)
+            {
                 dy.Add(y[i]);
             }
             for (int j = 1; j < n; j++)
             {
-                for(int jj = n; jj < j; jj--)
+                for (int jj = n; jj < j; jj--)
                 {
                     dy[jj] = dy[jj] - dy[jj - 1];
                 }
@@ -127,11 +128,11 @@
             for (int ii = 1; ii < n; ii++)
             {
                 yy += dy[ii] * c;
-                c = c*(p - x[ii]) / (h * (ii+1));
+                c = c * (p - x[ii]) / (h * (ii + 1));
             }
 
             double sum = 0;
-            sum += c+yy;
+            sum += c + yy;
             return sum;
         }
     }
