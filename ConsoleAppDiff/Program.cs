@@ -59,11 +59,11 @@
                 Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dLgrF[j], 3)}");
             }
 
-            Console.WriteLine("\tПогрешность равна:");
-            for(int i = 0;  x[i]<Math.PI; i++)
+            Console.WriteLine("\tПогрешность полинома Лагранжа равна:");
+            for(int i = 0;  x[i]<=Math.PI; i++)
             {
-                ERdLgrF.Add(daprF[i] - dLgrF[i]);
-                Console.WriteLine($"Rn({Math.Round(x[i], 3)}) = {Math.Round(ERdLgrF[i], 3)}");
+                ERdLgrF.Add(fy[i] - LgrF[i]);
+                Console.WriteLine($"Rn({Math.Round(x[i], 3)}) = {Math.Round(fy[i], 3)}-{Math.Round(LgrF[i],3)}={Math.Round(ERdLgrF[i], 3)}");
             }
             Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции через построение интерполяции Ньютона");
@@ -73,11 +73,11 @@
                 Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dNwtF[j], 3)}");
             }
 
-            Console.WriteLine("\tПогрешность равна:");
-            for (int i = 0; x[i] < Math.PI; i++)
+            Console.WriteLine("\tПогрешность интерполяции Ньютона равна:");
+            for (int i = 0; x[i] <= Math.PI; i++)
             {
-                ERdNwtF.Add(daprF[i] - dNwtF[i]);
-                Console.WriteLine($"Rn({Math.Round(x[i],3)}) = {Math.Round(ERdNwtF[i], 3)}");
+                ERdNwtF.Add(fy[i] - NwtF[i]);
+                Console.WriteLine($"Rn({Math.Round(x[i],3)}) = {Math.Round(fy[i], 3)}-{Math.Round(NwtF[i], 3)} = {Math.Round(ERdNwtF[i], 3)}");
             }
 
 
@@ -147,16 +147,13 @@
                 }
             }
             yy = y[0];
-            c = 1;
+            c = (p - x[0])/h;
             for (int ii = 1; ii < n; ii++)
             {
                 yy += dy[ii] * c;
-                c = c * (p - x[ii]) / (h * (ii + 1));
+                c = c * (p - x[0]) / (h * (ii + 1));
             }
-
-            double sum = 0;
-            sum += c + yy;
-            return sum;
+            return yy;
         }
     }
 }
