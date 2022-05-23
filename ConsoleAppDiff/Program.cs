@@ -13,9 +13,7 @@
 
             List<double> x = new List<double>();
             List<double> fy = new List<double>();
-            List<double> daprF = new List<double>();
             List<double> dsimF = new List<double>();
-            List<double> LgrF = new List<double>();
             List<double> dLgrF = new List<double>();
             List<double> ERdLgrF = new List<double>();
             List<double> NwtF = new List<double>();
@@ -43,41 +41,33 @@
             }
 
             Console.WriteLine("\n");
-            Console.WriteLine("\tДифференцирование функции, используя приближеную формулу");
-            for (int i = 1; x[i] <= Math.PI; i++)
-            {
-                daprF.Add(approx(x[i], dx));
-                Console.WriteLine($"df(x[{i - 1}]) = f({Math.Round(x[i - 1], 3)}) = {Math.Round(daprF[i - 1], 3)}");
-            }
-
-            Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции через построение полинома Лангранжа");
-            for (int i = 0; x[i] <= Math.PI; i++)  { LgrF.Add(Lagrange(x, fy, x[i])); }
-            for (int j = 0; j < LgrF.Count - 1; j++)
+            for (int j = 1; x[j]<=Math.PI; j++)
             {
-                dLgrF.Add((LgrF[j + 1] - LgrF[j] / dx));
-                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dLgrF[j], 3)}");
+                dLgrF.Add((Lagrange(x, fy, x[j]+dx) - Lagrange(x, fy, x[j]))/ dx);
+                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dLgrF[j-1], 3)}");
             }
 
             Console.WriteLine("\tПогрешность полинома Лагранжа равна:");
             for(int i = 0;  x[i]<=Math.PI; i++)
             {
-                ERdLgrF.Add(fy[i] - LgrF[i]);
-                Console.WriteLine($"Rn({Math.Round(x[i], 3)}) = {Math.Round(fy[i], 3)}-{Math.Round(LgrF[i],3)}={Math.Round(ERdLgrF[i], 3)}");
+                double L = Lagrange(x, fy, x[i]);
+                ERdLgrF.Add(fy[i] - L);
+                Console.WriteLine($"Rn({Math.Round(x[i], 3)}) = {Math.Round(fy[i], 3)}-{Math.Round(L,3)}={Math.Round(ERdLgrF[i], 3)}");
             }
             Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции через построение интерполяции Ньютона");
-            for (int i = 0; x[i] <= Math.PI; i++) { NwtF.Add(Newton(x, fy, x[i], dx)); }
-            for (int j = 0; j < NwtF.Count - 1; j++) {
-                dNwtF.Add((NwtF[j + 1] - NwtF[j] / dx));
-                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dNwtF[j], 3)}");
+            for (int j = 1; x[j] <= Math.PI; j++) {
+                dNwtF.Add((Newton(x, fy, x[j] + dx, dx) - Newton(x,fy, x[j],dx)) / dx);
+                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dNwtF[j-1], 3)}");
             }
 
             Console.WriteLine("\tПогрешность интерполяции Ньютона равна:");
             for (int i = 0; x[i] <= Math.PI; i++)
             {
-                ERdNwtF.Add(fy[i] - NwtF[i]);
-                Console.WriteLine($"Rn({Math.Round(x[i],3)}) = {Math.Round(fy[i], 3)}-{Math.Round(NwtF[i], 3)} = {Math.Round(ERdNwtF[i], 3)}");
+                double N = Newton(x, fy, x[i], dx);
+                ERdNwtF.Add(fy[i] - N);
+                Console.WriteLine($"Rn({Math.Round(x[i],3)}) = {Math.Round(fy[i], 3)}-{Math.Round(N, 3)} = {Math.Round(ERdNwtF[i], 3)}");
             }
 
 
@@ -129,31 +119,33 @@
 
         static double Newton(List<double> x, List<double> y, double p, double h)
         {
-            double yy = 0;
-            double c = 0;
+            
             int n = x.Count - 2;
 
             List<double> dy = new List<double>();
 
-            for (int i = 0; i < n; i++)
-            {
-                dy.Add(y[i]);
+            for (int i = 0; i < n; i++) dy.Add(y[i]);
+
+            for (int k = 0; k <= n; k++) {
+                for (int i = 1; i < n-k; i++) dy[i] = dy[i] - dy[i-1];
             }
-            for (int j = 1; j < n; j++)
+
+            double yy = y[0];
+            for (int k = 1; k < n; k++)
             {
-                for (int jj = n; jj < j; jj--)
-                {
-                    dy[jj] = dy[jj] - dy[jj - 1];
-                }
-            }
-            yy = y[0];
-            c = (p - x[0])/h;
-            for (int ii = 1; ii < n; ii++)
-            {
-                yy += dy[ii] * c;
-                c = c * (p - x[0]) / (h * (ii + 1));
+                double c = 1;
+                for (int i=0; i < k; i++) c = c * (p - x[i]);
+                yy = dy[k]/(Factorial(k) * Math.Pow(h, k))*c+yy;
             }
             return yy;
+        }
+
+
+        static int Factorial(int n)
+        {
+            if (n == 1) return 1;
+
+            return n * Factorial(n - 1);
         }
     }
 }
