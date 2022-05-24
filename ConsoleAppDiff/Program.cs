@@ -34,26 +34,26 @@
 
             Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции, используя приближеную формулу");
-            for (int i = 1; x[i] <= Math.PI; i++)
+            for (int i = 0; x[i] <= Math.PI; i++)
             {
                 daprF.Add(approx(x[i], dx));
-                Console.WriteLine($"df(x[{i - 1}]) = f({Math.Round(x[i - 1], 3)}) = {Math.Round(daprF[i - 1], 3)}");
+                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(daprF[i], 3)}");
             }
 
             Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функций, используя симметричную формулу");
-            for (int i = 1; x[i] <= Math.PI; i++)
+            for (int i = 0; x[i] <= Math.PI; i++)
             {
                 dsimF.Add(simetrical(x[i], dx));
-                Console.WriteLine($"df(x[{i - 1}]) = f({Math.Round(x[i - 1], 3)}) = {Math.Round(dsimF[i - 1], 3)}");
+                Console.WriteLine($"df(x[{i}]) = f({Math.Round(x[i], 3)}) = {Math.Round(dsimF[i], 3)}");
             }
 
             Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции через построение полинома Лангранжа");
-            for (int j = 1; x[j] <= Math.PI; j++)
+            for (int j = 0; x[j] <= Math.PI; j++)
             {
                 dLgrF.Add((Lagrange(x, fy, x[j] + dx) - Lagrange(x, fy, x[j])) / dx);
-                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dLgrF[j - 1], 3)}");
+                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dLgrF[j], 3)}");
             }
 
             Console.WriteLine("\tПогрешность полинома Лагранжа равна:");
@@ -65,10 +65,10 @@
             }
             Console.WriteLine("\n");
             Console.WriteLine("\tДифференцирование функции через построение интерполяции Ньютона");
-            for (int j = 1; x[j] <= Math.PI; j++)
+            for (int j = 0; x[j] <= Math.PI; j++)
             {
                 dNwtF.Add((Newton(x, fy, x[j] + dx, dx) - Newton(x, fy, x[j], dx)) / dx);
-                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dNwtF[j - 1], 3)}");
+                Console.WriteLine($"df(x[{j}]) = f({Math.Round(x[j], 3)}) = {Math.Round(dNwtF[j], 3)}");
             }
 
             Console.WriteLine("\tПогрешность интерполяции Ньютона равна:");
